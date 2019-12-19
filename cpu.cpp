@@ -64,9 +64,20 @@ void CPU::playCard(Trick &T, int p, type::SUIT &s, int pos)
   //  s = type::HEARTS;
   //}
 
+  int choice = 0;
+  
+  // let cpu figure out its choice
   
 
-  // used[choice] = true
+  // insert the cpu's choice into the trick and update cpu class
+  T.insert(hand[choice].getNum(), hand[choice].getSuit(), p);
+  if (s == type::UNASSIGNED)
+  {
+    T.setS(hand[choice].getSuit());
+    s = hand[choice].getSuit();
+  }
+  
+  used[choice] = true
 }
 
 void CPU::pass(Card &c1, Card &c2, Card &c3)
