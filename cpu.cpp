@@ -65,9 +65,68 @@ void CPU::playCard(Trick &T, int p, type::SUIT &s, int pos)
   //}
 
   int choice = 0;
+  bool hasSuit = false;
+  bool first = false;
+
+  /* let cpu figure out its choice */
   
-  // let cpu figure out its choice
+  // check if this is the first card in the trick
+
+  // check if hand has a card in the starting suit
+
+  // if a card hasnt been played in the trick yet
+  if (first)
+  {
+    // if hand has a card in the starting suit
+    if (hasSuit)
+    {
+      if (shoot) // if u have the suit and the cpu is shooting
+      {
+
+      }
+      else // if u have the suit and the cpu isnt shooting
+      {
+
+      }
+    }
+    else // if hand does not have the starting suit
+    {
+      if (shoot) // if u dont have the suit and the cpu is shooting
+      {
+
+      }
+      else // if u dont have the suit and the cpu isnt shooting
+      {
+
+      }
+    }
+  }
+  else // if a card has been played in the trick already
+  {
+    // if hand has a card in the starting suit
+    if (hasSuit)
+    {
+      if (shoot) // if u have the suit and the cpu is shooting
+      {
+    
+      }
+      else // if u have the suit and the cpu isnt shooting
+      {
+    
+      }
+    }
+    else // if hand does not have the starting suit
+    {
+      if (shoot) // if u dont have the suit and the cpu is shooting
+      {
+    
+      }
+      else // if u dont have the suit and the cpu isnt shooting
+      {
   
+      }
+    }
+  }
 
   // insert the cpu's choice into the trick and update cpu class
   T.insert(hand[choice].getNum(), hand[choice].getSuit(), p);
