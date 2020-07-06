@@ -17,6 +17,7 @@ class CPU
     void startHand();
     void reset();
     void order();
+    bool suitCheck(type::SUIT &s);
     int winners(int *nums, int size, int top, int *trash);
     void playCard(Trick &T, int p, type::SUIT &s, int pos);
     void pass(Card &c1, Card &c2, Card &c3);

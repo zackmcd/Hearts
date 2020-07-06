@@ -54,6 +54,18 @@ void CPU::startHand()
 
 }
 
+bool CPU::suitCheck(type::SUIT &s)
+{
+  for (int i = 0; i < 13; i++)
+  {
+    if (s == hand[i].getSuit())
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
 void CPU::playCard(Trick &T, int p, type::SUIT &s, int pos)
 {
   // for testing
@@ -69,36 +81,27 @@ void CPU::playCard(Trick &T, int p, type::SUIT &s, int pos)
   bool first = false;
 
   /* let cpu figure out its choice */
-  
-  // check if this is the first card in the trick
 
-  // check if hand has a card in the starting suit
+  // check if this is the first card in the trick
+  if (pos == 0)
+  {
+    first = true;
+  }
+  else
+  { // check if hand has a card in the starting suit
+    hasSuit = suitCheck(s);
+  }
 
   // if a card hasnt been played in the trick yet
   if (first)
   {
-    // if hand has a card in the starting suit
-    if (hasSuit)
+    if (shoot) // if u have the suit and the cpu is shooting
     {
-      if (shoot) // if u have the suit and the cpu is shooting
-      {
 
-      }
-      else // if u have the suit and the cpu isnt shooting
-      {
-
-      }
     }
-    else // if hand does not have the starting suit
+    else // if u have the suit and the cpu isnt shooting
     {
-      if (shoot) // if u dont have the suit and the cpu is shooting
-      {
 
-      }
-      else // if u dont have the suit and the cpu isnt shooting
-      {
-
-      }
     }
   }
   else // if a card has been played in the trick already
@@ -108,22 +111,22 @@ void CPU::playCard(Trick &T, int p, type::SUIT &s, int pos)
     {
       if (shoot) // if u have the suit and the cpu is shooting
       {
-    
+
       }
       else // if u have the suit and the cpu isnt shooting
       {
-    
+
       }
     }
     else // if hand does not have the starting suit
     {
       if (shoot) // if u dont have the suit and the cpu is shooting
       {
-    
+
       }
       else // if u dont have the suit and the cpu isnt shooting
       {
-  
+
       }
     }
   }
@@ -135,8 +138,8 @@ void CPU::playCard(Trick &T, int p, type::SUIT &s, int pos)
     T.setS(hand[choice].getSuit());
     s = hand[choice].getSuit();
   }
-  
-  used[choice] = true
+
+  used[choice] = true;
 }
 
 void CPU::pass(Card &c1, Card &c2, Card &c3)
@@ -144,7 +147,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
   bool one = false;
   bool two = false;
   bool three = false;
-  
+
   int lossHearts = 0; //num of losing hearts
   int *trash = new int[13];
   int *lDiam = new int[13];
@@ -168,7 +171,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
     lSpadB[i] = 0;
     lClubB[i] = 0;
   }
-  
+
   for (int i = 400; i >= 100; i = i - 100)
   {
     int nums[13];
@@ -217,7 +220,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
         lClubB[z] = nums[z];
       }
     }
-    
+
     // go through nums for particular suit
     if (i == 400)
       numWins = winners(nums, k, 14, trash);
@@ -227,7 +230,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
       numWins = winners(nums, k, 14, lSpad);
     else if (i == 100)
       numWins = winners(nums, k, 14, lClub);
-   
+
     numLoss = k - numWins;
     totalLoss = totalLoss + numLoss;
 
@@ -242,7 +245,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
     }
   }
 
-  
+
 
   if ((totalLoss <= 10) && (numDanger >= 2)) // ratio and probability of shooting the moon
     shoot = true;
@@ -261,7 +264,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
         for (int j = 0; j < 13; j++)
         {
 	  if (hand[j].getSuit() == type::HEARTS)
-          {  
+          {
 	    if (hand[j].getNum() == trash[i])
             {
 	      if (!one)
@@ -272,14 +275,14 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
 	        trash[i] = 0; //****
 	      }
 	      else if (!two)
-              {  
+              {
 		c2 = hand[j];
 		two = true;
 	        used[j] = true;
 	        trash[i] = 0; //****
 	      }
 	      else if (!three)
-              {  
+              {
 		c3 = hand[j];
 		three = true;
 	        used[j] = true;
@@ -312,7 +315,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
       if ((diam <= spad) && (diam <= club))
       {
         bool t1 = true;
-        
+
 	for (int i = 0; i < 13; i++)
         {
 	  for (int j = 0; j < 13; j++)
@@ -320,7 +323,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
             // assuming arrays r sorted
 	    if (lDiam[i])
 	    {
-	      if(hand[j].getSuit() == type::DIAMONDS) 
+	      if(hand[j].getSuit() == type::DIAMONDS)
 	      {
 	        if (hand[j].getNum() == lDiam[i])
                 {
@@ -333,34 +336,34 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
 	            lDiam[i] = 0;
 	          }
 	          else if (!two)
-                  {  
+                  {
 	            c2.alter(lDiam[i], type::DIAMONDS);
 	            two = true;
 	            used[j] = true;
 	            lDiam[i] = 0;
 	          }
 	          else if (!three)
-                  {  
+                  {
 	            c3.alter(lDiam[i], type::DIAMONDS);
 	            three = true;
 	            used[j] = true;
 	            lDiam[i] = 0;
                   }
-	    
+
 	          t1 = false;
 	        }
 	      }
 	    }
 	  }
 	}
-	
+
 	if (t1)
 	  diam = 1000;
       }
       else if ((club <= diam) && (club <= spad))
       {
         bool t2 = true;
-        
+
 	for (int i = 0; i < 13; i++)
         {
 	  for (int j = 0; j < 13; j++)
@@ -381,27 +384,27 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
 	            lClub[i] = 0;
 	          }
 	          else if (!two)
-                  {  
+                  {
 	            c2.alter(lClub[i], type::CLUBS);
 	            two = true;
 	            used[j] = true;
 	            lClub[i] = 0;
 	          }
 	          else if (!three)
-                  {   
+                  {
 	            c3.alter(lClub[i], type::CLUBS);
 	            three = true;
 	            used[j] = true;
 	            lClub[i] = 0;
                   }
-	    
+
 	          t2 = false;
                 }
 	      }
 	    }
 	  }
 	}
-	
+
 	if (t2)
 	  club = 1000;
 
@@ -409,7 +412,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
       else if ((spad <= club) && (spad <= diam))
       {
         bool t3 = true;
-        
+
 	for (int i = 0; i < 13; i++)
         {
 	  for (int j = 0; j < 13; j++)
@@ -430,27 +433,27 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
 	            lSpad[i] = 0;
 	          }
 	          else if (!two)
-                  {  
+                  {
 	            c2.alter(lSpad[i], type::SPADES);
 	            two = true;
 	            used[j] = true;
 	            lSpad[i] = 0;
 	          }
 	          else if (!three)
-                  {  
+                  {
 	            c3.alter(lSpad[i], type::SPADES);
 	            three = true;
 	            used[j] = true;
 	            lSpad[i] = 0;
                   }
-	    
+
 	          t3 = false;
 	        }
 	      }
 	    }
 	  }
 	}
-	
+
 	if (t3)
 	  spad = 1000;
 
@@ -481,7 +484,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
 	        lSpadB[i] = 0; //****
 	      }
 	      else if (!two)
-              {  
+              {
 	        c2.alter(lSpadB[i], type::SPADES);
 	        two = true;
 	        high++;
@@ -489,7 +492,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
 	        lSpadB[i] = 0; //****
 	      }
 	      else if (!three)
-              {  
+              {
 	        c3.alter(lSpadB[i], type::SPADES);
 	        three = true;
 	        high++;
@@ -538,7 +541,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
                 used[j] = true;
 	        trashB[i] = 0; //****
               }
-              
+
 	      if (high > 1)
 	        tester = false;
 	    }
@@ -578,7 +581,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
                 used[j] = true;
                 lDiamB[i] = 0; //****
               }
-	    
+
 	      if (high > 1)
 	        tester = false;
 	    }
@@ -618,7 +621,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
                 used[j] = true;
                 lClubB[i] = 0; //****
               }
-            
+
 	      if (high > 1)
 	        tester = false;
 	    }
@@ -695,7 +698,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
 	}
       }
     }
-    
+
     for (int i = 0; i < 13; i++)
     {
       for (int j = 0; j < 13; j++)
@@ -730,7 +733,7 @@ void CPU::pass(Card &c1, Card &c2, Card &c3)
       }
     }
   }
-  
+
   cout << "Computer chose:" << endl;
   c1.print();
   c2.print();
@@ -773,24 +776,24 @@ void CPU::order()
   int c1 = 0;
 
   for (int i = 0; i < 13; i++)
-  { 
+  {
     if (hand[i].getSuit() == type::HEARTS)
-    { 
+    {
       h[h1] = hand[i].getNum();
       h1++;
     }
     else if (hand[i].getSuit() == type::DIAMONDS)
-    { 
+    {
       d[d1] = hand[i].getNum();
       d1++;
     }
     else if (hand[i].getSuit() == type::SPADES)
-    { 
+    {
       s[s1] = hand[i].getNum();
       s1++;
     }
     else if (hand[i].getSuit() == type::CLUBS)
-    { 
+    {
       c[c1] = hand[i].getNum();
       c1++;
     }
@@ -891,7 +894,7 @@ void CPU::accept(Card &c1, Card &c2, Card &c3)
       break;
     }
   }
-  
+
   for (int i = 0; i < 13; i++)
   {
     if (used[i])
@@ -935,7 +938,7 @@ void CPU::accept(Card &c1, Card &c2, Card &c3)
 
   numWins = winners(nums, k, 14, temp);
   numLoss = k - numWins;
-  
+
   if (numLoss > 0)
     shoot = false;
 
