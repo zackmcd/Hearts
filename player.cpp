@@ -14,6 +14,12 @@ Player::Player()
     used[i] = false;
 }
 
+Player::~Player()
+{
+  delete [] hand;
+  delete [] used;
+}
+
 void Player::insert(Card c, int index)
 {
   hand[index] = c;
@@ -47,7 +53,7 @@ void Player::startHand()
       used[i] = true;
       break;
     }
-  
+
   cout << "Since you have the two of Clubs you must start the first trick." << endl;
   cout << endl;
   //cout << "TRICK :" << endl;
@@ -61,7 +67,7 @@ void Player::playCard(Trick &T, int p, type::SUIT &s)
   // for testing
   //T.insert(12, type::SPADES, p);
   //if (s == type::UNASSIGNED)
-  //{  
+  //{
   //  T.setS(type::SPADES);
   //  s = type::SPADES;
   //}
@@ -69,7 +75,7 @@ void Player::playCard(Trick &T, int p, type::SUIT &s)
   print();
   cout << endl;
   cout << "Select a card to play by entering the index of the card." << endl;
-  
+
   int choice;
   cin >> choice;
 
@@ -79,7 +85,7 @@ void Player::playCard(Trick &T, int p, type::SUIT &s)
     T.setS(hand[choice].getSuit());
     s = hand[choice].getSuit();
   }
-  
+
   used[choice] = true;
 
   cout << endl;
@@ -120,7 +126,7 @@ void Player::order()
 {
   int h[13];
   int d[13];
-  int s[13]; 
+  int s[13];
   int c[13];
   int h1 = 0;
   int d1 = 0;

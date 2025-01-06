@@ -19,7 +19,7 @@ void passCross(Player &P1, CPU &C2, CPU &C3, CPU &C4);
 
 void playHand(Scoreboard &score, Player &P1, CPU &C2, CPU &C3, CPU &C4);
 
-int main() 
+int main()
 {
   srand(time(0));
 
@@ -27,14 +27,14 @@ int main()
   D.Create();
 
   Scoreboard score;
-  
+
   Player P1;
   CPU C2;
   CPU C3;
   CPU C4;
-
+/*
   int pass = 1; // left = 1, right = 2, cross = 3, hold = 4
- 
+
   while (!score.Over())
   {
     // deal
@@ -43,15 +43,15 @@ int main()
     C2.order();
     C3.order();
     C4.order();
-    
-    
-    P1.print(); 
+
+
+    P1.print();
     cout << endl;
-    C2.print(); 
+    C2.print();
     cout << endl;
-    C3.print(); 
+    C3.print();
     cout << endl;
-    C4.print(); 
+    C4.print();
     cout << endl;
 
     // passing
@@ -70,7 +70,7 @@ int main()
       passRight(P1, C2, C3, C4);
       //playRight
       playHand(score, P1, C2, C3, C4);
-      
+
       pass++;
     }
     else if (pass == 3)
@@ -94,9 +94,9 @@ int main()
     C2.reset();
     C3.reset();
     C4.reset();
-  
-  }
 
+  }
+*/
   return 0;
 
 }
@@ -115,7 +115,7 @@ void Deal(Deck D, Player P1, CPU C2, CPU C3, CPU C4)
       while (test)
       {
         num = (rand() % 52);
-        
+
 	if (j == 0 && !D.dealt[num]) // P1
         {
           D.dealt[num] = true;
@@ -161,7 +161,7 @@ void playHand(Scoreboard &score, Player &P1, CPU &C2, CPU &C3, CPU &C4)
     turn = 3;
   else if (C4.start())
     turn = 4;
- 
+
   //play hand
   for (int i = 0; i < 13; i++)
   {
@@ -204,7 +204,7 @@ void playHand(Scoreboard &score, Player &P1, CPU &C2, CPU &C3, CPU &C4)
       }
       else //when its not the first trick
       {
-        
+
         if (turn == 1)
 	{
 	  trick.print();
@@ -223,7 +223,7 @@ void playHand(Scoreboard &score, Player &P1, CPU &C2, CPU &C3, CPU &C4)
 	  turn++;
 	}
 	else if (turn == 4)
-	{ 
+	{
 	  C4.playCard(trick, turn, ss, j); //C4 play card
 	  turn = 1;
         }
@@ -234,9 +234,9 @@ void playHand(Scoreboard &score, Player &P1, CPU &C2, CPU &C3, CPU &C4)
 
     // figure out who gets points using trick
     trick.print();
-    turn = trick.points(score, ss); 
+    turn = trick.points(score, ss);
     //cout << "T = " << turn << endl;
-    
+
     cout << endl;
     cout << "End of trick " << i+1 << endl;
     cout << "****************" << endl;
@@ -247,13 +247,13 @@ void playHand(Scoreboard &score, Player &P1, CPU &C2, CPU &C3, CPU &C4)
     cout << endl;
 
     //testing
-    P1.print(); 
+    P1.print();
     cout << endl;
-    C2.print(); 
+    C2.print();
     cout << endl;
-    C3.print(); 
+    C3.print();
     cout << endl;
-    C4.print(); 
+    C4.print();
     cout << endl;
 
   }
@@ -303,21 +303,21 @@ void passRight(Player &P1, CPU &C2, CPU &C3, CPU &C4)
   Card p2;
   Card p3;
   P1.pass(p1, p2, p3);
-  
+
   Card c21;
   Card c22;
   Card c23;
   C2.pass(c21, c22, c23);
-  
+
   Card c31;
   Card c32;
   Card c33;
   C3.pass(c31, c32, c33);
-  
+
   Card c41;
   Card c42;
   Card c43;
-  C4.pass(c41, c42, c43); 
+  C4.pass(c41, c42, c43);
 
   P1.accept(c21, c22, c23);
   C2.accept(c31, c32, c33);
@@ -332,17 +332,17 @@ void passCross(Player &P1, CPU &C2, CPU &C3, CPU &C4)
   Card p2;
   Card p3;
   P1.pass(p1, p2, p3);
-  
+
   Card c21;
   Card c22;
   Card c23;
   C2.pass(c21, c22, c23);
-  
+
   Card c31;
   Card c32;
   Card c33;
   C3.pass(c31, c32, c33);
-  
+
   Card c41;
   Card c42;
   Card c43;

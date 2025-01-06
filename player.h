@@ -19,6 +19,7 @@ class Player
     void playCard(Trick &T, int p, type::SUIT &s);
     void pass(Card &c1, Card &c2, Card &c3);
     void accept(Card &c1, Card &c2, Card &c3);
+    virtual ~Player();
 };
 
-#endif 
+#endif

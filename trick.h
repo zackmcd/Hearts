@@ -17,6 +17,7 @@ class Trick
     int points(Scoreboard &S, type::SUIT ss);
     void insert(int n, type::SUIT s22, int t);
     void setS(type::SUIT x);
+    virtual ~Trick();
 };
 
 #endif

@@ -13,6 +13,12 @@ Trick::Trick()
   s = type::UNASSIGNED;
 }
 
+Trick::~Trick()
+{
+  delete [] cards;
+  delete [] who;
+}
+
 void Trick::start(int T)
 {
   who[T] = true;

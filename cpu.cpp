@@ -16,6 +16,12 @@ CPU::CPU()
   shoot = false;
 }
 
+CPU::~CPU()
+{
+  delete [] hand;
+  delete [] used;
+}
+
 void CPU::insert(Card c, int index)
 {
   hand[index] = c;

@@ -1,10 +1,19 @@
+#include <iostream>
 #include "card.h"
 #include "deck.h"
+
+using namespace std;
 
 Deck::Deck()
 {
   deck = new Card[52];
   dealt = new bool[52];
+}
+
+Deck::~Deck()
+{
+  delete [] deck;
+  delete [] dealt;
 }
 
 void Deck::Create()
@@ -42,4 +51,3 @@ void Deck::print()
   for (int i = 0; i < 52; i++)
     deck[i].print();
 }
-
