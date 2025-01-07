@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void Deal(Deck D, Player P1, CPU C2, CPU C3, CPU C4);
+void Deal(Deck &D, Player &P1, CPU &C2, CPU &C3, CPU &C4);
 
 void passLeft(Player &P1, CPU &C2, CPU &C3, CPU &C4);
 
@@ -32,13 +32,14 @@ int main()
   CPU C2;
   CPU C3;
   CPU C4;
-/*
+
   int pass = 1; // left = 1, right = 2, cross = 3, hold = 4
 
   while (!score.Over())
   {
     // deal
     Deal(D, P1, C2, C3, C4);
+
     P1.order();
     C2.order();
     C3.order();
@@ -94,14 +95,13 @@ int main()
     C2.reset();
     C3.reset();
     C4.reset();
-
   }
-*/
+
   return 0;
 
 }
 
-void Deal(Deck D, Player P1, CPU C2, CPU C3, CPU C4)
+void Deal(Deck &D, Player &P1, CPU &C2, CPU &C3, CPU &C4)
 {
   // dealing the deck
   int num = 0;
@@ -116,7 +116,7 @@ void Deal(Deck D, Player P1, CPU C2, CPU C3, CPU C4)
       {
         num = (rand() % 52);
 
-	if (j == 0 && !D.dealt[num]) // P1
+	      if (j == 0 && !D.dealt[num]) // P1
         {
           D.dealt[num] = true;
 	  test = false;
@@ -175,60 +175,59 @@ void playHand(Scoreboard &score, Player &P1, CPU &C2, CPU &C3, CPU &C4)
       {
         if (turn == 1)
         {
-	  P1.startHand();
-	  trick.start(turn); // start will insert 2 of clubs at turn
-	  turn++;
+	         P1.startHand();
+	         trick.start(turn); // start will insert 2 of clubs at turn
+	         turn++;
         }
-	else if (turn == 2)
-	{
+	      else if (turn == 2)
+	      {
           C2.startHand();
-	  trick.start(turn); // insert into trick
+	        trick.start(turn); // insert into trick
           turn++;
-	}
-	else if (turn == 3)
-	{
+	      }
+	      else if (turn == 3)
+	      {
           C3.startHand();
-	  trick.start(turn); // insert into trick
+	        trick.start(turn); // insert into trick
           turn++;
-	}
-	else if (turn == 4)
-	{
+	      }
+	      else if (turn == 4)
+	      {
           C4.startHand();
-	  trick.start(turn); // insert into trick
-	  turn = 1;
-	}
+	        trick.start(turn); // insert into trick
+	        turn = 1;
+	      }
 
-	j++;
-	trick.setS(type::CLUBS);
-	ss = type::CLUBS;
+	      j++;
+	      trick.setS(type::CLUBS);
+	      ss = type::CLUBS;
       }
       else //when its not the first trick
       {
-
         if (turn == 1)
-	{
-	  trick.print();
-	  cout << endl;
-	  P1.playCard(trick, turn, ss); // P1 play card
-	  turn++;
-	}
-	else if (turn == 2)
-	{
-	  C2.playCard(trick, turn, ss, j); //C2 play card
-	  turn++;
-	}
-	else if (turn == 3)
-	{
-	  C3.playCard(trick, turn, ss, j); //C3 play card
-	  turn++;
-	}
-	else if (turn == 4)
-	{
-	  C4.playCard(trick, turn, ss, j); //C4 play card
-	  turn = 1;
-        }
+	      {
+	         trick.print();
+	         cout << endl;
+	         P1.playCard(trick, turn, ss); // P1 play card
+	         turn++;
+	       }
+	       else if (turn == 2)
+	       {
+	         C2.playCard(trick, turn, ss, j); //C2 play card
+	         turn++;
+	       }
+	       else if (turn == 3)
+	       {
+	         C3.playCard(trick, turn, ss, j); //C3 play card
+	         turn++;
+	       }
+	       else if (turn == 4)
+	       {
+	         C4.playCard(trick, turn, ss, j); //C4 play card
+	         turn = 1;
+         }
 
-        j++;
+         j++;
       }
     }
 
